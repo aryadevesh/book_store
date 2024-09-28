@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { PORT, mongoURL } = require('./config.js');
 const { Book } = require('./models/bookModel.js');
+console.log('Book Model:', Book); // Check if Book is defined
+// Check the path is correct
+
 const Joi = require('joi'); // For validation
 
 const app = express();
@@ -28,18 +31,24 @@ const bookSchema = Joi.object({
 // Add a book
 app.route("/addBook").post(async (req, res) => {
     try {
-        const { error, value } = bookSchema.validate(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
+        const { title, author, publishYear } = req.body;
 
-        const { title, author, publishYear } = value;
-        const newBook = { title, author, publishYear };
-        const book = await Book.create(newBook);
-        res.status(200).send(book);
+        if (title && author && publishYear) {
+            const newBook = { title, author, publishYear };
+            const book = await Book.create(newBook); // Ensure Book is correctly defined
+            res.status(200).send(book);
+        } else {
+            res.status(400).send("All fields are required");
+        }
     } catch (err) {
         console.error(`Error in adding book: ${err}`);
-        res.status(500).json({ status: 'error', message: 'Internal server error' });
+        return res.status(500).json({
+            status: 'error',
+            error: err.message // Use err.message for better error clarity
+        });
     }
 });
+
 
 // Get all books
 app.route("/getBooks").get(async (req, res) => {
@@ -89,6 +98,11 @@ app.route("/getBooks/:id").get(async (req, res) => {
     }
 });
 
+app.get('/test', (req, res) => {
+    res.send('Server is working!');
+});
+
+
 // MongoDB and server setup
 mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -103,6 +117,6 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Global error handler
 app.use((err, req, res, next) => {
-    console.error(`Global Error: ${err}`);
+    console.error(`Global Error: ${err.stack}`); // Log the stack for more detail
     res.status(500).json({ status: 'error', message: 'Something went wrong!' });
 });

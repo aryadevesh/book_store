@@ -1,21 +1,20 @@
-const mongoose = require("mongoose");
+// models/bookModel.js
+const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
-        required: true
+        required: true,
     },
-    author:{
+    author: {
         type: String,
-        required: true
+        required: true,
     },
-    publishYear:{
+    publishYear: {
         type: Number,
-        required: true
-    }
-},{
-    timestamps: true
-}
-)
-const Book = mongoose.model("Book", bookSchema);
-module.exports = Book;
+        required: true,
+    },
+});
+
+const Book = mongoose.model('Book', bookSchema);
+module.exports = { Book };
