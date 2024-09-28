@@ -13,7 +13,7 @@ app.use(express.json());
 
 // CORS middleware configuration
 app.use(cors({
-    origin: ["http://your-frontend-url.com"],
+    origin: ["https://iiitk-book-store.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
