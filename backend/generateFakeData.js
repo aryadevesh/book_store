@@ -1,50 +1,57 @@
-import mongoose from "mongoose";
-import { faker } from '@faker-js/faker';
-import fs  from "fs";
-import { Book } from "../models/bookModel.js";
+require('dotenv').config(); // Load environment variables
+const mongoose = require("mongoose");
+const { faker } = require('@faker-js/faker'); // Use require instead of import
+const fs = require("fs");
+const { Book } = require("../models/bookModel.js");
+const { mongoURL } = require('./config.js'); // Using destructuring
 
 
+// Connect to MongoDB
 mongoose.connect(mongoURL)
-.then(() => {
-    console.log(`MongoDB Connected at ${mongoURL}`);
-}).catch((err) => {
-    console.log(`MongoDB Connection Error: ${err.message}`);
-})
-
-const generateFakeData = (count) => {
-  const fakeData = [];
-  for (let i = 0; i < count; i++) {
-    fakeData.push({
-      title: faker.lorem.words(2),
-      author: faker.person.fullName(),
-      publishYear: faker.number.int({ min: 1800, max: 2023 }),
+    .then(() => {
+        console.log(`MongoDB Connected at ${mongoURL}`);
+        // Start generating and inserting data after connection
+        insertFakeData(10).then(() => exportDataToJson()).catch(console.error);
+    })
+    .catch(err => {
+        console.error(`MongoDB Connected at ${mongoURL}`);
+        //console.error(`MongoDB Connection Error: ${err.message}`);
     });
-  }
-  return fakeData;
+
+// Function to generate fake data
+const generateFakeData = (count) => {
+    return Array.from({ length: count }, () => ({
+        title: faker.lorem.words(2),
+        author: faker.person.fullName(),
+        publishYear: faker.number.int({ min: 1800, max: 2023 }),
+    }));
 };
 
+// Function to insert fake data into MongoDB
 const insertFakeData = async (count) => {
-  const fakeData = generateFakeData(count);
-  await Book.insertMany(fakeData);
-  console.log('Fake data inserted into MongoDB.');
-};
-
-const exportDataToJson = async () => {
-  const books = await Book.find({}); 
-  const jsonOutput = JSON.stringify(books, null, 2);
-
-  fs.writeFile('bookData.json', jsonOutput, (err) => {
-    if (err) {
-      console.error('Error exporting data to JSON file:', err);
-    } else {
-      console.log('Data exported to bookData.json');
+    try {
+        const fakeData = generateFakeData(count);
+        await Book.insertMany(fakeData);
+        console.log('Fake data inserted into MongoDB.');
+    } catch (err) {
+        console.error('Error inserting fake data:', err);
     }
-  });
 };
 
-const count = 10; 
-insertFakeData(count)
-  .then(() => exportDataToJson())
-  .catch((err) => console.error(err));
-
-
+// Function to export data to JSON file
+const exportDataToJson = async () => {
+    try {
+        const books = await Book.find({});
+        const jsonOutput = JSON.stringify(books, null, 2);
+        
+        fs.writeFile('bookData.json', jsonOutput, (err) => {
+            if (err) {
+                console.error('Error exporting data to JSON file:', err);
+            } else {
+                console.log('Data exported to bookData.json');
+            }
+        });
+    } catch (err) {
+        console.error('Error fetching books for export:', err);
+    }
+};

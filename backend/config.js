@@ -1,6 +1,6 @@
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
+require('dotenv').config(); // Make sure to call config() to load the variables
 
-export const PORT = 5000;
-
-export const mongoURL = `mongodb+srv://${dbUser}:${dbPassword}@cluster0.mo1uo.mongodb.net/dbTest`;
+// Use CommonJS syntax in Node.js
+const mongoURL = process.env.MONGODB_URL; // Ensure you're using the same key as in .env
+const PORT = 5000;
+module.exports = { mongoURL, PORT };
