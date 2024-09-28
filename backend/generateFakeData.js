@@ -9,13 +9,12 @@ const { mongoURL } = require('./config.js'); // Using destructuring
 // Connect to MongoDB
 mongoose.connect(mongoURL)
     .then(() => {
-        console.log(`MongoDB Connected at ${mongoURL}`);
+        console.log(`MongoDB Connected at 1 ${mongoURL}`);
         // Start generating and inserting data after connection
         insertFakeData(10).then(() => exportDataToJson()).catch(console.error);
     })
     .catch(err => {
-        console.error(`MongoDB Connected at ${mongoURL}`);
-        //console.error(`MongoDB Connection Error: ${err.message}`);
+        console.error(`MongoDB Connection Error: ${err.message}`);
     });
 
 // Function to generate fake data
