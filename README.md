@@ -1,4 +1,4 @@
-# Online Book Store
+# Online Book Store (under bug solving)
 
 ## Overview
 
@@ -11,6 +11,7 @@ The Online Book Store is a web application that allows users to manage a digital
 - **Delete Books**: Users have the ability to remove books from the catalog.
 - **Browse Catalog**: The application offers a browsing feature to explore the entire book collection.
 
+<<<<<<< HEAD
 ## Getting Started
 
 ### Installation
@@ -35,3 +36,5 @@ The Online Book Store is a web application that allows users to manage a digital
    [npm start]
    ```
 2. Open a web browser and go to `http://localhost:[3000]` to access the application.
+=======
+>>>>>>> refs/remotes/origin/main
