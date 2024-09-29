@@ -15,8 +15,8 @@ const app = express();
 app.use(express.json());
 
 // CORS middleware configuration
-
 app.use(cors());
+
 // Book schema validation
 const bookSchema = Joi.object({
     title: Joi.string().min(1).required(),
