@@ -17,7 +17,7 @@ The Online Book Store is a web application that allows users to manage a digital
 
 1. Clone the repository:
    ```
-   https://github.com/Prakharsvnit/BookStore.git
+   https://github.com/aryadevesh/BookStore.git
    ```
 2. Navigate to the project directory:
    ```

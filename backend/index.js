@@ -15,12 +15,8 @@ const app = express();
 app.use(express.json());
 
 // CORS middleware configuration
-app.use(cors({
-    origin: ["https://iiitk-book-store.vercel.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
-
+const cors = require('cors');
+app.use(cors());
 // Book schema validation
 const bookSchema = Joi.object({
     title: Joi.string().min(1).required(),
