@@ -1,8 +1,8 @@
-# Online Book Store (under bug solving)
+# Online Book Store 
 
 ## Overview
 
-The Online Book Store is a web application that allows users to manage a digital catalog of books. This project provides a user-friendly interface for adding, updating, deleting, and searching books in the catalog.
+The Online Book Store is a web application that allows users to manage a digital catalog of books. This project provides a user-friendly interface for adding, updating, deleting, and searching books in the catalog. Link :- 
 
 ## Features
 
@@ -13,7 +13,7 @@ The Online Book Store is a web application that allows users to manage a digital
 
 ## Getting Started
 
-### Installation
+### Installation in case backend is down.
 
 1. Clone the repository:
    ```
@@ -42,8 +42,6 @@ The Online Book Store is a web application that allows users to manage a digital
 8. In the constants.js file, put the PROD_URL as LOCAL_URL for running into the local enviornment
 
 9. Run npm run dev:
-
    ```
    [npm run dev]
    ```
-   
